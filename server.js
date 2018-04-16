@@ -24,7 +24,7 @@ createServer((req, res) => {
     res.statusCode = 200;
     res.end();
   } else {
-    console.log(`Redirecting ==> ${req.url} to ${Location}`);
+    console.log(`Redirecting ==> ${req.url} to ${Location}`, req.headers);
 
     res.writeHead(STATUS, { Location });
     res.end();
