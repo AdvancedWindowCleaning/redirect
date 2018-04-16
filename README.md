@@ -18,6 +18,7 @@ Any GLB health checks which is detected by the lack of these headers:
 ```
 X-Forwarded-Proto
 X-Forwarded-For
+X-Requested-By
 ```
 
 Will return empty body with 200 OK. These should satisfy both kubernetes and GLB
