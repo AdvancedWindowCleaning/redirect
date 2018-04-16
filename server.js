@@ -10,12 +10,7 @@ invariant(REDIRECT_URL, 'REDIRECT_URL environment variable is missing');
 invariant(REDIRECT_URL.search(/[\?=]/) === -1, 'REDIRECT_URL cannot contain any querystring or fragments');
 
 const isHealthCheck = headers => {
-  return !!(
-    headers['x-forwarded-for'] ||
-    headers['x-forwarded-proto'] ||
-    headers['x-requested-by'] ||
-    (headers['user-agent'] && headers['user-agent'].search(/(GoogleHC|kube-probe)/) > -1)
-  );
+  return headers['user-agent'] && headers['user-agent'].search(/(GoogleHC|kube-probe)/) > -1;
 };
 
 createServer((req, res) => {

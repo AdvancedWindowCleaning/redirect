@@ -13,12 +13,11 @@ curl -I http://localhost:3000/?utm_campaign=hongy
 
 #### Running on Google Cloud
 
-Any GLB health checks which is detected by the lack of these headers:
+Any GLB or K8S health checks which is detected by these user agents:
 
 ```
-X-Forwarded-Proto
-X-Forwarded-For
-X-Requested-By
+GoogleHC
+kube-probe
 ```
 
 Will return empty body with 200 OK. These should satisfy both kubernetes and GLB
