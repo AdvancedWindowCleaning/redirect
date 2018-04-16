@@ -19,6 +19,8 @@ createServer((req, res) => {
   const skip = isHealthCheck(req.headers);
 
   if (skip) {
+    console.log('Skipping redirection', req.headers);
+
     res.statusCode = 200;
     res.end();
   } else {
