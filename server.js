@@ -9,14 +9,25 @@ const PORT = parseInt(process.env.PORT, 10) || 80;
 invariant(REDIRECT_URL, 'REDIRECT_URL environment variable is missing');
 invariant(REDIRECT_URL.search(/[\?=]/) === -1, 'REDIRECT_URL cannot contain any querystring or fragments');
 
+const isHealthCheck = headers => {
+  return !!(headers['x-forwarded-for'] || headers['x-forwarded-proto']);
+};
+
 createServer((req, res) => {
   const url = parse(req.url);
   const Location = `${REDIRECT_URL}${url.search || ''}`;
+  const skip = isHealthCheck(req.headers);
 
-  console.log(`Redirecting ==> ${req.url} to ${Location}`);
+  if (skip) {
+    res.statusCode = 200;
+    res.end();
+  } else {
+    console.log(`Redirecting ==> ${req.url} to ${Location}`);
 
-  res.writeHead(STATUS, { Location });
-  res.end();
+    res.writeHead(STATUS, { Location });
+    res.end();
+  }
+
 }).listen(PORT);
 
 console.log(`Serving on ${PORT} redirecting to ${REDIRECT_URL} with ${STATUS}`);

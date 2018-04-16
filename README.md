@@ -1,4 +1,4 @@
-Redirect with ease
+Redirect with ease – the Google Load Balancer friendly version.
 
 ```
 docker run \
@@ -10,3 +10,15 @@ docker run \
 
 curl -I http://localhost:3000/?utm_campaign=hongy
 ```
+
+#### Running on Google Cloud
+
+Any GLB health checks which is detected by the lack of these headers:
+
+```
+X-Forwarded-Proto
+X-Forwarded-For
+```
+
+Will return empty body with 200 OK. These should satisfy both kubernetes and GLB
+health check requirements.
